@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">orgsurveyr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
       </span>
     </div>
 
@@ -85,6 +85,9 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/analysing_people_survey_data.html">Analysing People Survey Data With The orgsurveyr Package</a>
+    </li>
     <li>
       <a href="../articles/introduction_to_orgsurveyr.html">Introduction To orgsurveyr</a>
     </li>
@@ -128,7 +131,7 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>plot_org</span>(<span class='no'>x</span>, <span class='kw'>fill_var</span> <span class='kw'>=</span> <span class='st'>"depth"</span>, <span class='kw'>df</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>is_circular</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+    <pre class="usage"><span class='fu'>plot_org</span>(<span class='no'>x</span>, <span class='kw'>fill_var</span> <span class='kw'>=</span> <span class='st'>"org_depth"</span>, <span class='kw'>df</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>is_circular</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>is_dendrogram</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>return_tbl_graph</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -188,14 +191,14 @@ are included in the vignettes.  This simple function is provided as a convenienc
 #&gt; # A rooted tree
 #&gt; #
 #&gt; <span style='color: #555555;'># Node Data: 38 x 4 (active)</span><span>
-#&gt;   unit_id depth is_leaf unit_size
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> 1           0 FALSE           3
-#&gt; </span><span style='color: #555555;'>2</span><span> 3           1 FALSE           2
-#&gt; </span><span style='color: #555555;'>3</span><span> 4           1 FALSE           3
-#&gt; </span><span style='color: #555555;'>4</span><span> 5           1 FALSE           3
-#&gt; </span><span style='color: #555555;'>5</span><span> 10          2 FALSE           3
-#&gt; </span><span style='color: #555555;'>6</span><span> 11          2 FALSE           2
+#&gt;   unit_id org_depth is_leaf unit_size
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> 1               0 FALSE           3
+#&gt; </span><span style='color: #555555;'>2</span><span> 3               1 FALSE           2
+#&gt; </span><span style='color: #555555;'>3</span><span> 4               1 FALSE           3
+#&gt; </span><span style='color: #555555;'>4</span><span> 5               1 FALSE           3
+#&gt; </span><span style='color: #555555;'>5</span><span> 10              2 FALSE           3
+#&gt; </span><span style='color: #555555;'>6</span><span> 11              2 FALSE           2
 #&gt; </span><span style='color: #555555;'># ... with 32 more rows</span><span>
 #&gt; #
 #&gt; </span><span style='color: #555555;'># Edge Data: 37 x 2</span><span>
@@ -207,11 +210,11 @@ are included in the vignettes.  This simple function is provided as a convenienc
 #&gt; </span><span style='color: #555555;'># ... with 34 more rows</span><span></div><div class='input'>
 # plot the organisation using the depth of the unit in the organisation as fill colour
 </div></span><span class='co'># NOT RUN {</span>
-<span class='fu'>plot_org</span>(<span class='no'>tg2</span>, <span class='kw'>fill_var</span><span class='kw'>=</span><span class='st'>'depth'</span>) <span class='co'>#normal dendrogram</span>
-<span class='fu'>plot_org</span>(<span class='no'>tg2</span>, <span class='kw'>fill_var</span><span class='kw'>=</span><span class='st'>'depth'</span>, <span class='kw'>is_circular</span><span class='kw'>=</span><span class='fl'>TRUE</span>) <span class='co'>#circular dendrogram</span>
+<span class='fu'>plot_org</span>(<span class='no'>tg2</span>, <span class='kw'>fill_var</span><span class='kw'>=</span><span class='st'>'org_depth'</span>) <span class='co'>#normal dendrogram</span>
+<span class='fu'>plot_org</span>(<span class='no'>tg2</span>, <span class='kw'>fill_var</span><span class='kw'>=</span><span class='st'>'org_depth'</span>, <span class='kw'>is_circular</span><span class='kw'>=</span><span class='fl'>TRUE</span>) <span class='co'>#circular dendrogram</span>
 
 <span class='co'># build on ggraph object using ggraph functionality - ie add unit sizes</span>
-<span class='fu'>plot_org</span>(<span class='no'>tg2</span>, <span class='kw'>fill_var</span><span class='kw'>=</span><span class='st'>'depth'</span>) + <span class='fu'><a href='https://www.rdocumentation.org/packages/ggraph/topics/geom_node_text'>geom_node_text</a></span>(<span class='fu'>aes</span>(<span class='kw'>label</span><span class='kw'>=</span><span class='no'>unit_size</span>), <span class='kw'>color</span><span class='kw'>=</span><span class='st'>'white'</span>)
+<span class='fu'>plot_org</span>(<span class='no'>tg2</span>, <span class='kw'>fill_var</span><span class='kw'>=</span><span class='st'>'org_depth'</span>) + <span class='fu'><a href='https://www.rdocumentation.org/packages/ggraph/topics/geom_node_text'>geom_node_text</a></span>(<span class='fu'>aes</span>(<span class='kw'>label</span><span class='kw'>=</span><span class='no'>unit_size</span>), <span class='kw'>color</span><span class='kw'>=</span><span class='st'>'white'</span>)
 <span class='co'># }</span><div class='input'>
 <span class='co'># can also include aggregated unit information from calc_summary_df</span>
 

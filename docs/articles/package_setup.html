@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">orgsurveyr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
       </span>
     </div>
 
@@ -53,6 +53,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
+      <a href="../articles/analysing_people_survey_data.html">Analysing People Survey Data With The orgsurveyr Package</a>
+    </li>
+    <li>
       <a href="../articles/introduction_to_orgsurveyr.html">Introduction To orgsurveyr</a>
     </li>
     <li>
@@ -100,25 +103,36 @@
 <a href="#introduction" class="anchor"></a>Introduction</h1>
 <p>This vignette details the steps required to set up and configure the orgsurveyr package, in particular how to use the shiny applications embedded within the package.</p>
 </div>
-<div id="running-shiny-apps" class="section level1">
+<div id="running-shiny-apps-within-rstudio" class="section level1">
 <h1 class="hasAnchor">
-<a href="#running-shiny-apps" class="anchor"></a>Running shiny apps</h1>
-<div id="from-within-rstudio" class="section level2">
+<a href="#running-shiny-apps-within-rstudio" class="anchor"></a>Running shiny apps within RStudio</h1>
+<div id="general-approach" class="section level2">
 <h2 class="hasAnchor">
-<a href="#from-within-rstudio" class="anchor"></a>From within RStudio</h2>
-<p>To run a shiny app within RStudio type the name of the function;</p>
+<a href="#general-approach" class="anchor"></a>General approach</h2>
+<p>To run the <code>test_viz</code> shiny app within RStudio type the name of the function:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/test_viz.html">test_viz</a></span>()</code></pre></div>
-<p>More options</p>
+<p>Other shiny apps:</p>
 <ul>
 <li>
-<code>test_viz</code> just simulates and organisation</li>
-<li>future viz - permits visualisation of either simulated or real data as long as its formatted in a certain way</li>
+<code>test_viz</code> - simulates an organisation with different characteristics</li>
+<li>
+<code>orgviz</code> - permits visualisation of either simulated or real data as long as the data formats described in <a href="../html/orgsurveyr-data-formats.html">orgsurveyr-data-formats</a> as used.</li>
 </ul>
 </div>
-<div id="setting-up-on-a-shiny-server" class="section level2">
+<div id="further-configuration" class="section level2">
 <h2 class="hasAnchor">
-<a href="#setting-up-on-a-shiny-server" class="anchor"></a>Setting up on a Shiny Server</h2>
-<p>A detailed explanation of setting up and configuring a Shiny Server is beyond the scope of this vignette, but assuming that a Shiny Server is available and the orgsurveyr package is installed, it is a case of constructing a shiny app file as follows:</p>
+<a href="#further-configuration" class="anchor"></a>Further configuration</h2>
+<p>Whilst the <code>test_viz</code> function has no parameters, the <code>orgviz</code> function takes two parameters, <code>tg</code> and <code>df</code>. These allow the user to pass a tidygraph object and a data frame containing summary metrics for the organisation into the shiny app for plotting. For example:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/orgviz.html">orgviz</a></span>(<span class="dt">tg =</span> orgsurveyr<span class="op">::</span>tg_org, <span class="dt">df =</span> orgsurveyr<span class="op">::</span>tg_org_summarised_df)</code></pre></div>
+</div>
+</div>
+<div id="running-apps-on-a-shiny-server" class="section level1">
+<h1 class="hasAnchor">
+<a href="#running-apps-on-a-shiny-server" class="anchor"></a>Running apps on a Shiny Server</h1>
+<div id="general-approach-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#general-approach-1" class="anchor"></a>General approach</h2>
+<p>Assuming that a Shiny Server is available and the orgsurveyr package is installed, it is a case of constructing a shiny app file as follows:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(shiny)
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(orgsurveyr)
 
@@ -128,7 +142,28 @@
          }
 )</code></pre></div>
 <p>This can be modified as required and copied to the user’s shiny server directory.</p>
-<p>For convenience there is a <code>make_shiny_app</code> function which creates a template shiny application file like that above.</p>
+<p>For convenience there is a <a href="../html/make_shiny_app.html"><code>make_shiny_app</code></a> function which creates a template shiny application file like that above for both the <code>test_viz</code> and <code>orgviz</code> shiny apps.</p>
+</div>
+<div id="further-configuration-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#further-configuration-1" class="anchor"></a>Further configuration</h2>
+<p>A shiny app file for the <code>orgviz</code> package which includes custom data might look like this:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(shiny)
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(orgsurveyr)
+
+my_tg &lt;-<span class="st"> </span>orgsurveyr<span class="op">::</span>tg_org
+my_df &lt;-<span class="st"> </span>orgsurveyr<span class="op">::</span>tg_org_summarised_df
+
+<span class="kw"><a href="https://www.rdocumentation.org/packages/shiny/topics/shinyApp">shinyApp</a></span>(<span class="dt">ui =</span> <span class="kw"><a href="../reference/orgviz_ui.html">orgviz_ui</a></span>(),
+         <span class="dt">server =</span> <span class="cf">function</span>(input, output) {
+           <span class="kw"><a href="../reference/orgviz_server.html">orgviz_server</a></span>(input, output, <span class="dt">tg =</span> my_tg, <span class="dt">df =</span> my_df)
+         }
+)</code></pre></div>
+</div>
+<div id="docker" class="section level2">
+<h2 class="hasAnchor">
+<a href="#docker" class="anchor"></a>Docker</h2>
+<p>The orgsurveyr package can be installed and run within a Docker container that runs both RStudio Server and Shiny Server. This is a convenient way of trying out the Shiny apps with minimal setup overhead and is also a useful way to learn how to configure a Shiny Server. See the README on the package’s GitHub repository README for more information.</p>
 </div>
 </div>
 <div id="session-info" class="section level1">
@@ -188,9 +223,16 @@
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#introduction">Introduction</a></li>
       <li>
-<a href="#running-shiny-apps">Running shiny apps</a><ul class="nav nav-pills nav-stacked">
-<li><a href="#from-within-rstudio">From within RStudio</a></li>
-      <li><a href="#setting-up-on-a-shiny-server">Setting up on a Shiny Server</a></li>
+<a href="#running-shiny-apps-within-rstudio">Running shiny apps within RStudio</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#general-approach">General approach</a></li>
+      <li><a href="#further-configuration">Further configuration</a></li>
+      </ul>
+</li>
+      <li>
+<a href="#running-apps-on-a-shiny-server">Running apps on a Shiny Server</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#general-approach-1">General approach</a></li>
+      <li><a href="#further-configuration-1">Further configuration</a></li>
+      <li><a href="#docker">Docker</a></li>
       </ul>
 </li>
       <li><a href="#session-info">Session Info</a></li>

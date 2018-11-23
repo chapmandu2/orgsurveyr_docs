@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">orgsurveyr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
       </span>
     </div>
 
@@ -53,6 +53,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
+      <a href="../articles/analysing_people_survey_data.html">Analysing People Survey Data With The orgsurveyr Package</a>
+    </li>
+    <li>
       <a href="../articles/introduction_to_orgsurveyr.html">Introduction To orgsurveyr</a>
     </li>
     <li>
@@ -271,12 +274,26 @@ plot_tg &lt;-<span class="st"> </span>tg3 <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
 <p><img src="introduction_to_orgsurveyr_files/figure-html/unnamed-chunk-4-1.png" width="528"></p>
 </div>
+<div id="interactive-visualisations" class="section level2">
+<h2 class="hasAnchor">
+<a href="#interactive-visualisations" class="anchor"></a>Interactive visualisations</h2>
+<p>The following shiny apps are included in the <code>orgsurveyr</code> package:</p>
+<ul>
+<li>
+<code>test_viz</code> - simulates an organisation with different characteristics</li>
+<li>
+<code>orgviz</code> - permits visualisation of either simulated or real data as long as the data formats described in <a href="../html/orgsurveyr-data-formats.html">orgsurveyr-data-formats</a> as used.</li>
+</ul>
+<p>Further information on using these is available in the <a href="package_setup.html">Package Setup Vignette</a> but to visualise the examples above we can just type the following command:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/orgviz.html">orgviz</a></span>(<span class="dt">tg=</span>tg3, <span class="dt">df=</span>summary_df)</code></pre></div>
+</div>
 </div>
 <div id="further-readingviewing" class="section level1">
 <h1 class="hasAnchor">
 <a href="#further-readingviewing" class="anchor"></a>Further reading/viewing</h1>
 <ul>
 <li><a href="organisations_with_ggraph.html">Organisations With ggraph vignette</a></li>
+<li><a href="package_setup.html">Package Setup Vignette</a></li>
 <li>
 <a href="https://www.data-imaginist.com">Data Imaginist</a> - Thomas Lin Pedersen’s blog</li>
 <li>
@@ -299,6 +316,7 @@ plot_tg &lt;-<span class="st"> </span>tg3 <span class="op">%&gt;%</span>
       <li><a href="#simulating-individuals-within-an-organisation">Simulating individuals within an organisation</a></li>
       <li><a href="#summarising-individual-level-data">Summarising individual level data</a></li>
       <li><a href="#plotting-aggregated-data">Plotting aggregated data</a></li>
+      <li><a href="#interactive-visualisations">Interactive visualisations</a></li>
       </ul>
 </li>
       <li><a href="#further-readingviewing">Further reading/viewing</a></li>

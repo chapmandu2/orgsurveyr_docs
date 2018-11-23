@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Test visualisation shiny app — test_viz • orgsurveyr</title>
+<title>Testviz shiny app — test_viz • orgsurveyr</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Test visualisation shiny app — test_viz" />
+<meta property="og:title" content="Testviz shiny app — test_viz" />
 
-<meta property="og:description" content="Test visualisation shiny app" />
+<meta property="og:description" content="Convenience function to run the test_viz shiny app within an R session." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">orgsurveyr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
       </span>
     </div>
 
@@ -85,6 +85,9 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/analysing_people_survey_data.html">Analysing People Survey Data With The orgsurveyr Package</a>
+    </li>
     <li>
       <a href="../articles/introduction_to_orgsurveyr.html">Introduction To orgsurveyr</a>
     </li>
@@ -117,14 +120,14 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Test visualisation shiny app</h1>
+    <h1>Testviz shiny app</h1>
     <small class="dont-index">Source: <a href='https://github.com/ukgovdatascience/orgsurveyr/blob/master/R/shiny_test.R'><code>R/shiny_test.R</code></a></small>
     <div class="hidden name"><code>test_viz.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Test visualisation shiny app</p>
+    <p>Convenience function to run the test_viz shiny app within an R session.</p>
     
     </div>
 
@@ -134,15 +137,25 @@
 
     <p>runs a shiny app</p>
     
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The test_viz shiny app allows interactive simulation and visualisation of organisations of different shapes and
+sizes.</p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>NULL</span></div><div class='output co'>#&gt; NULL</div></pre>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='fu'>test_viz</span>()
+
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

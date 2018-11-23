@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">orgsurveyr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
       </span>
     </div>
 
@@ -54,6 +54,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
+      <a href="articles/analysing_people_survey_data.html">Analysing People Survey Data With The orgsurveyr Package</a>
+    </li>
+    <li>
       <a href="articles/introduction_to_orgsurveyr.html">Introduction To orgsurveyr</a>
     </li>
     <li>
@@ -83,7 +86,10 @@
       
       </header><div class="row">
   <div class="contents col-md-9">
-
+<!--  I couldn't knit with these lines included (PC)
+[![Build Status](https://travis-ci.org/ukgovdatascience/orgsurveyr.svg?branch=master)](https://travis-ci.org/ukgovdatascience/orgsurveyr)
+[![codecov](https://codecov.io/gh/ukgovdatascience/orgsurveyr/branch/master/graph/badge.svg)](https://codecov.io/gh/ukgovdatascience/orgsurveyr)
+-->
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 <div id="orgsurveyr" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
@@ -95,6 +101,7 @@
 <p>You can install orgsurveyr from github with:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages("devtools")</span>
 devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"ukgovdatascience/orgsurveyr"</span>, <span class="dt">build_vignettes =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<p>There is also infrastructure within the repo to install and run orgsurveyr within Docker. See the section at the end of this help file for details but essentially you clone the repo and type <code>make run</code>. More help is available with <code>make help</code>.</p>
 </div>
 <div id="example---ggraphtidygraph" class="section level2">
 <h2 class="hasAnchor">
@@ -123,7 +130,7 @@ tg
 <div id="example---orgsurveyr" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example---orgsurveyr" class="anchor"></a>Example - orgsurveyr</h2>
-<p>The <code>orgsurveyr</code> package provides detailed vignettes, convenience functions and example data to help HR analysts make use of the <a href="https://github.com/thomasp85/ggraph"><code>ggraph</code></a> and <a href="https://github.com/thomasp85/tidygraph"><code>tidygraph</code></a> packages in the analysis of organisation data.</p>
+<p>The <code>orgsurveyr</code> package provides detailed vignettes, convenience functions, shiny apps and example data to help HR analysts make use of the <a href="https://github.com/thomasp85/ggraph"><code>ggraph</code></a> and <a href="https://github.com/thomasp85/tidygraph"><code>tidygraph</code></a> packages in the analysis of organisation data.</p>
 <p>A realistic organisation can be simulated and plotted:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Random">set.seed</a></span>(<span class="dv">1236</span>)
 tg2 &lt;-<span class="st"> </span><span class="kw"><a href="reference/create_realistic_org.html">create_realistic_org</a></span>(<span class="dv">4</span>,<span class="dv">3</span>, <span class="dt">prob=</span><span class="fl">0.3</span>)
@@ -192,14 +199,45 @@ summary_df
 <span class="co">#&gt;  9 14      test_var   9.03</span>
 <span class="co">#&gt; 10 14      test_var2 19.4 </span>
 <span class="co">#&gt; # ... with 66 more rows</span></code></pre></div>
-<p>Finally the aggregated data can be plotted on the dendrogram:</p>
+<p>The aggregated data can be plotted on the dendrogram:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/plot_org.html">plot_org</a></span>(tg3, <span class="dt">fill_var =</span> <span class="st">'test_var'</span>, summary_df)</code></pre></div>
 <p><img src="reference/figures/README-example-7-1.png" width="700"></p>
+<p>Larger organisations can be represented as starburst plots:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Random">set.seed</a></span>(<span class="dv">1236</span>)
+tg4 &lt;-<span class="st"> </span><span class="kw"><a href="reference/create_realistic_org.html">create_realistic_org</a></span>(<span class="dv">5</span>,<span class="dv">5</span>, <span class="dt">prob=</span><span class="fl">0.3</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="reference/simulate_unit_size.html">simulate_unit_size</a></span>()
+
+tg4_individuals_df &lt;-<span class="st"> </span>tg4 <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="reference/simulate_individuals_df.html">simulate_individuals_df</a></span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">test_var2 =</span> purrr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/purrr/topics/map">map_dbl</a></span>(individual_id, <span class="op">~</span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">1</span>, <span class="dv">20</span>,<span class="dv">3</span>)))
+
+tg4_summary_df &lt;-<span class="st"> </span><span class="kw"><a href="reference/calc_summary_df.html">calc_summary_df</a></span>(<span class="dt">tg=</span>tg4, <span class="dt">df=</span>tg4_individuals_df, 
+                              <span class="dt">selected_vars=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'test_var'</span>, <span class="st">'test_var2'</span>), <span class="dt">is_cumulative=</span><span class="ot">TRUE</span>)
+<span class="co">#&gt; Using wide data frame format for individual variables</span>
+
+<span class="kw"><a href="reference/plot_org.html">plot_org</a></span>(tg4, <span class="dt">fill_var =</span> <span class="st">'test_var'</span>, <span class="dt">df =</span> tg4_summary_df, <span class="dt">is_circular =</span> <span class="ot">TRUE</span>, <span class="dt">is_dendrogram =</span> <span class="ot">FALSE</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_fill_gradientn</span>(<span class="dt">colours=</span>RColorBrewer<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/RColorBrewer/topics/ColorBrewer">brewer.pal</a></span>(<span class="dv">11</span>, <span class="st">'PiYG'</span>))</code></pre></div>
+<p><img src="reference/figures/README-example-large-org-1.png" width="700"></p>
+<p>An interactive visualisation in shiny can be launched:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/orgviz.html">orgviz</a></span>(<span class="dt">tg=</span>tg3, <span class="dt">df=</span>summary_df)</code></pre></div>
 </div>
+<div id="docker" class="section level2">
+<h2 class="hasAnchor">
+<a href="#docker" class="anchor"></a>Docker</h2>
+<p>The git repository contains infrastructure for installing and running orgsurveyr within Docker. This is useful if you quickly and easily want to try out the package before installing it, and is also useful for trying out the shiny apps.</p>
+<p>First clone the git repository to your local machine:</p>
+<pre><code>git clone https://github.com/ukgovdatascience/orgsurveyr.git</code></pre>
+<p>Then from within the repo type <code>make run</code>. This will:</p>
+<ul>
+<li>Build the Docker image</li>
+<li>Start a container</li>
+<li>Open RStudio and Shiny server in your default browser (localhost:8789 and localhost:3839 respectively)</li>
+</ul>
+<p>To stop and remove the Docker container type <code>make remove</code>. More help is available by typing <code>make help</code>.</p>
 </div>
-<div id="further-readingviewing" class="section level1">
-<h1 class="hasAnchor">
-<a href="#further-readingviewing" class="anchor"></a>Further reading/viewing</h1>
+<div id="further-readingviewing" class="section level2">
+<h2 class="hasAnchor">
+<a href="#further-readingviewing" class="anchor"></a>Further reading/viewing</h2>
 <ul>
 <li>
 <a href="https://www.data-imaginist.com">Data Imaginist</a> - Thomas Lin Pedersen’s blog</li>
@@ -207,6 +245,7 @@ summary_df
 <a href="https://www.rstudio.com/resources/videos/tidying-up-your-network-analysis-with-tidygraph-and-ggraph/">‘Tidying up your network analysis with tidygraph and ggraph’</a>: RStudio::conf presentation from Thomas Lin Pedersen</li>
 <li><a href="https://user2018.r-project.org/blog/2018/04/18/interview-with-thomas-lin-pedersen/">useR 2018 Interview with Thomas Lin Pedersen</a></li>
 </ul>
+</div>
 </div>
   </div>
 
@@ -236,14 +275,7 @@ summary_df
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
-<ul class="list-unstyled">
-<li><a href="https://travis-ci.org/ukgovdatascience/orgsurveyr"><img src="https://travis-ci.org/ukgovdatascience/orgsurveyr.svg?branch=master" alt="Build Status"></a></li>
-<li><a href="https://codecov.io/gh/ukgovdatascience/orgsurveyr"><img src="https://codecov.io/gh/ukgovdatascience/orgsurveyr/branch/master/graph/badge.svg" alt="codecov"></a></li>
-</ul>
-</div>
-</div>
+  </div>
 </div>
 
 
